@@ -11,7 +11,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: "https://master--charming-khapse-0d137f.netlify.app",
+    origin: "https://a5--charming-khapse-0d137f.netlify.app",
   })
 );
 
