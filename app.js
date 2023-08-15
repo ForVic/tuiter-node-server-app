@@ -18,8 +18,8 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    // origin: 'https://a5--charming-khapse-0d137f.netlify.app',
-    origin: 'http://localhost:3000',
+    origin: 'https://a6--charming-khapse-0d137f.netlify.app',
+    // origin: 'http://localhost:3000',
   }),
 );
 
