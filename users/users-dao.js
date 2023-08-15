@@ -1,35 +1,19 @@
-let users = [];
+/* eslint-disable import/extensions */
+/* eslint-disable no-underscore-dangle */
+import usersModel from './users-model.js';
 
-export const findAllUsers = () => users;
-export const findUserById = (uid) => {
-  const index = users.findIndex((u) => u._id === uid);
-  if (index !== -1) return users[index];
-  return null;
-};
-export const findUserByUsername = (username) => {
-  const index = users.findIndex((u) => u.username === username);
-  if (index !== -1) return users[index];
-  return null;
-};
-export const findUserByCredentials = (username, password) => {
-  const index = users.findIndex(
-    (u) => u.username === username && u.password === password
-  );
-  if (index !== -1) return users[index];
-  return null;
-};
-export const createUser = (user) => {
-  user._id = new Date().getTime() + "";
-  users.push(user);
-  return user;
-};
-export const updateUser = (uid, user) => {
-  const index = users.findIndex((u) => u._id === uid);
-  users[index] = { ...users[index], ...user };
-  return { status: "ok" };
-};
-export const deleteUser = (uid) => {
-  const index = users.findIndex((u) => u._id === uid);
-  users.splice(index, 1);
-  return { status: "ok" };
-};
+export const findAllUsers = () => usersModel.find();
+
+export const findUserById = (uid) => usersModel.findById(uid);
+
+export const findUserByUsername = (username) => usersModel.findOne({ username });
+
+// eslint-disable-next-line max-len
+export const findUserByCredentials = (username, password) => usersModel.findOne({ username, password });
+
+export const createUser = (user) => usersModel.create(user);
+
+// eslint-disable-next-line max-len, no-return-await
+export const updateUser = async (uid, user) => await usersModel.updateOne({ _id: uid }, { $set: user });
+
+export const deleteUser = (uid) => usersModel.deleteOne({ _id: uid });

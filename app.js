@@ -1,29 +1,37 @@
-import express from "express";
-import AuthController from "./users/auth-controller.js";
-import HelloController from "./controllers/hello-controller.js";
-import UserController from "./controllers/users-controller.js";
-import TuitsController from "./controllers/tuits/tuits-controller.js";
-import cors from "cors";
-import session from "express-session";
-import "dotenv/config";
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-extraneous-dependencies */
+import express from 'express';
+import cors from 'cors';
+import session from 'express-session';
+import mongoose from 'mongoose';
+import AuthController from './users/auth-controller.js';
+import HelloController from './controllers/hello-controller.js';
+import UserController from './controllers/users-controller.js';
+import TuitsController from './controllers/tuits/tuits-controller.js';
+import 'dotenv/config';
+
+const UN = 'Cluster85480';
+const PW = 'cmRyV0xOX19T';
+mongoose.connect(`mongodb+srv://${UN}:${PW}@cluster85480.esxcwdg.mongodb.net/tuiter?retryWrites=true&w=majority`);
 
 const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: "https://a5--charming-khapse-0d137f.netlify.app",
-  })
+    // origin: 'https://a5--charming-khapse-0d137f.netlify.app',
+    origin: 'http://localhost:3000',
+  }),
 );
 
 const sessionOptions = {
-  secret: "any string",
+  secret: 'any string',
   resave: false,
   saveUninitialized: false,
 };
-if (process.env.NODE_ENV !== "development") {
+if (process.env.NODE_ENV !== 'development') {
   sessionOptions.proxy = true;
   sessionOptions.cookie = {
-    sameSite: "none",
+    sameSite: 'none',
     secure: true,
   };
 }
