@@ -14,6 +14,11 @@ export const findUserByCredentials = (username, password) => usersModel.findOne(
 export const createUser = (user) => usersModel.create(user);
 
 // eslint-disable-next-line max-len, no-return-await
-export const updateUser = async (uid, user) => await usersModel.updateOne({ _id: uid }, { $set: user });
+export const updateUser = async (uid, user) => {
+  usersModel.updateOne({ _id: uid }, { $set: user })
+    .then((ret) => ((ret.acknowledged && ret.matchedCount === ret.modifiedCount)
+      ? usersModel.findById(uid).lean()
+      : null));
+};
 
 export const deleteUser = (uid) => usersModel.deleteOne({ _id: uid });
